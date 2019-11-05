@@ -26,42 +26,42 @@ router.get("/:id", (req, res) => {
     .catch(error => {
       res.status(500).json(error);
     });
+});
 
-  router.post("/", (req, res) => {
-    const accountData = req.body;
-    db("accounts")
-      .insert(accountData, "id")
-      .then(ids => {
-        res.status(200).json(ids);
-      })
-      .catch(error => {
-        res.status(500).json(error);
-      });
-  });
+router.post("/", (req, res) => {
+  const accountData = req.body;
+  db("accounts")
+    .insert(accountData, "id")
+    .then(ids => {
+      res.status(200).json(ids);
+    })
+    .catch(error => {
+      res.status(500).json({ error: "Error adding account!" });
+    });
+});
 
-  router.put("/:id", (req, res) => {
-    db("accounts")
-      .where({ id: req.params.id })
-      .update(req.body)
-      .then(count => {
-        res.status(200).json(count);
-      })
-      .catch(error => {
-        res.status(500).json(error);
-      });
-  });
+router.put("/:id", (req, res) => {
+  db("accounts")
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(error => {
+      res.status(500).json({ error: "Error editing account!" });
+    });
+});
 
-  router.delete("/:id", (req, res) => {
-    db("accounts")
-      .where({ id: req.params.id })
-      .del()
-      .then(count => {
-        res.status(200).json(count);
-      })
-      .catch(error => {
-        res.status(500).json(error);
-      });
-  });
+router.delete("/:id", (req, res) => {
+  db("accounts")
+    .where({ id: req.params.id })
+    .del()
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(error => {
+      res.status(500).json({ error: "Error deleting account!" });
+    });
 });
 
 module.exports = router;
